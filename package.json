@@ -1,0 +1,31 @@
+{
+  "name": "debategory",
+  "version": "2.0.0",
+  "description": "Open Source speech list for plenary sessions, meetings, conferences and congresses.",
+  "main": "index.js",
+  "repository": "https://github.com/ebinf/debategory",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discussion",
+    "speech",
+    "list",
+    "plenary",
+    "meeting",
+    "conference"
+  ],
+  "author": "Erik Borowski",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "eventemitter2": "^6.4.3",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "jquery-sortablejs": "^1.0.1",
+    "socket.io": "^2.3.0",
+    "sortablejs": "^1.10.2",
+    "twig": "^1.15.1",
+    "uikit": "^3.5.6"
+  },
+  "devDependencies": {}
+}

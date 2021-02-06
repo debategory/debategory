@@ -1,0 +1,12 @@
+{% set pagetitle = "Seite nicht gefunden" %}
+{% set noloader = true %}
+{% extends 'admin/base.twig' %}
+{% block content %}
+<div class="uk-card uk-card-small uk-card-default uk-card-body">
+  <h1 class="uk-card-title">Seite nicht gefunden.</h1>
+  <p>Die angeforderte Seite konnte nicht gefunden werden. Eventuell ist der Link fehlerhaft oder unvollständig.</p>
+  <a class="uk-button uk-button-secondary" href="/admin/speechlist"><span uk-icon="icon: list"></span>&nbsp;Redeliste</a>
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

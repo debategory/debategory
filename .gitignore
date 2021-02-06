@@ -1,3 +1,6 @@
+# Debategory specific
+data/
+
 # Logs
 logs
 *.log
