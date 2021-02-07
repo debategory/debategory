@@ -87,7 +87,7 @@ function finishSayings() {
 function setTime() {
   var date = new Date;
   $("#clockTime").text(date.toLocaleTimeString());
-  $("#clockDate").text(date.getDate() + "." + (date.getMonth() + 1).toString().padStart(2, "0") + ".");
+  $("#clockDate").text((date.getDate()).toString().padStart(2, "0") + "." + (date.getMonth() + 1).toString().padStart(2, "0") + ".");
 }
 
 $("#toggleFullscreen").click(function () {
