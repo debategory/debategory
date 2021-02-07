@@ -73,3 +73,13 @@ button:disabled {
 	margin-left: -17px;
 	margin-bottom: -34px;
 }
+
+.dg-login-background {
+  background: rgb(22,82,164);
+  background: linear-gradient(130deg, rgba(22,82,164,1) 0%, rgba(75,151,254,1) 100%);
+}
+
+.dg-login-background-pride {
+  background: rgb(255,0,0);
+  background: linear-gradient(130deg, rgba(255,0,0,1) 10%, rgba(255,128,0,1) 26%, rgba(210,217,49,1) 42%, rgba(0,153,28,1) 58%, rgba(0,52,255,1) 74%, rgba(145,69,252,1) 90%);
+}

@@ -1,13 +1,17 @@
-const express = require("express"),
-      app     = express(),
-      path    = require("path"),
-      http    = require("http").createServer(app),
-      io      = require("socket.io")(http),
-      twig    = require("twig"),
-      config  = require("./modules/config.js"),
-      routes  = require("./modules/routes.js"),
-      slist   = require("./modules/speechlist.js"),
-      stime   = require("./modules/speechtime.js");
+const express  = require("express"),
+      app      = express(),
+      path     = require("path"),
+      passport = require("passport"),
+      session  = require("express-session"),
+      flash    = require("express-flash"),
+      http     = require("http").createServer(app),
+      io       = require("socket.io")(http),
+      twig     = require("twig"),
+      config   = require("./modules/config.js"),
+      routes   = require("./modules/routes.js"),
+      auth     = require("./modules/authentication.js"),
+      slist    = require("./modules/speechlist.js"),
+      stime    = require("./modules/speechtime.js");
 
 //////////////// DEBUG ////////////////
 for (var list in config.lists) {
@@ -27,6 +31,18 @@ app.set("twig options", {
 });
 app.set('cache', false);
 twig.cache(false);
+
+app.use(flash());
+app.use(express.urlencoded({
+  extended: false
+}));
+app.use(session({
+  secret: "diesisteintest",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session())
 
 app.use("/static", express.static('static'));
 app.use("/static/jquery", express.static(__dirname + '/node_modules/jquery/dist/'));
