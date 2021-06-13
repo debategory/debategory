@@ -108,14 +108,14 @@ class UserManager {
     return passport.authenticate('local', {
       successRedirect: './speechlist',
       failureRedirect: './login',
-      failureFlash: "fail"
+      failureFlash: "login_fail"
     })(req, res, next);
   }
 
   logout(req, res) {
     if (req.isAuthenticated()) {
       req.logout();
-      req.flash("success", "success");
+      req.flash("success", "logout_success");
       return res.redirect("./login");
     }
     return res.redirect("./login");

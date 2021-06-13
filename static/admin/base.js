@@ -20,7 +20,7 @@ function toggleDarkmode() {
     });
   }
   window.sessionStorage.setItem("darkmode", darkmodeStyle != null);
-  $(".uk-card-default").toggleClass("uk-card-secondary");
+  $(".uk-card-default:not(.dg-bubble)").toggleClass("uk-card-secondary");
   $(".uk-modal-dialog").toggleClass("uk-background-secondary uk-light");
   $("#loader").toggleClass("uk-overlay-primary")
 }

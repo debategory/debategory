@@ -8,21 +8,18 @@
   </head>
   <body class="dg-login-background">
     <div class="uk-cover uk-width-1-4@l uk-width-1-3@m uk-visible@m">
-      {% if messages.error %}
-        <div class="uk-alert-danger" uk-alert>
-          <a class="uk-alert-close" uk-close></a>
-          <p>Entweder ist der Anmeldename nicht bekannt oder das Passwort falsch.</p>
-        </div>
-      {% elseif messages.success %}
-        <div class="uk-alert-success" uk-alert>
-          <a class="uk-alert-close" uk-close></a>
-          <p>Du wurdest erfolgreich ausgeloggt. Auf Wiedersehen!</p>
-        </div>
-      {% endif %}
       <div class="dg-bubble uk-card uk-card-default uk-card-body uk-text-justify{% if messages.error %} uk-animation-shake{% endif %}">
         <h3 class="uk-card-title">Hallo.</h3>
         <p class="uk-text-small">Bitte melde dich an, um diese Seite zu nutzen. Wenn du keine Anmeldedaten hast, wende dich bitte an die oder den Administrator:in.</p>
-
+        {% if messages.error %}
+          <div class="uk-text-danger">
+            <p>Entweder ist der Anmeldename nicht bekannt oder das Passwort falsch.</p>
+          </div>
+        {% elseif messages.success %}
+          <div class="uk-text-success">
+            <p>Du wurdest erfolgreich ausgeloggt. Auf Wiedersehen!</p>
+          </div>
+        {% endif %}
         <form action="./login" method="POST">
           <div class="uk-margin">
             <div class="uk-inline uk-width-1-1">
@@ -30,14 +27,12 @@
             <input class="uk-input uk-form-blank" name="username" type="text" required autofocus placeholder="Anmeldename">
             </div>
           </div>
-
           <div class="uk-margin">
             <div class="uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: lock"></span>
               <input class="uk-input uk-form-blank" name="password" type="password" required placeholder="Passwort">
             </div>
           </div>
-
           <div class="uk-width-1-1">
             <input class="uk-button uk-button-primary uk-float-right" type="submit" value="Anmelden">
           </div>
@@ -63,7 +58,5 @@
     </noscript>
     <script src="/static/uikit/js/uikit.min.js"></script>
     <script src="/static/uikit/js/uikit-icons.min.js"></script>
-    <script src="/static/jquery/jquery.min.js"></script>
-    <script src="/static/admin/base.js"></script>
   </body>
 </html>

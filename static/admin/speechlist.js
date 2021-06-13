@@ -1,6 +1,7 @@
 const admin = io("/admin");
 const animationspeed = "fast";
 var lists = [];
+var connected;
 
 ////////////////////////////////////
 ///////// HELPER FUNCTIONS /////////
@@ -90,6 +91,19 @@ function showSettings(list) {
 ////////////////////////////////////
 ////////// SOCKET EVENTS ///////////
 ////////////////////////////////////
+
+admin.on("disconnect", function(a, b) {
+  connected = false;
+  $("#saying").text("Verbindung zum Server verloren...");
+  $("#loader").fadeIn("slow");
+});
+
+admin.on("connect", function(a, b) {
+  if (connected == false) {
+    connected = true;
+    $("#loader").fadeOut("slow");
+  }
+});
 
 admin.on("loadList", function(list, object) {
   if (object.closed) {
