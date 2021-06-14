@@ -20,6 +20,10 @@ for (var list in config.lists) {
 }
 slist.switch(0);
 stime.time = 15;
+
+var pages = [
+  {"name": "Redeliste", "url": "/admin/speechlist", "icon": "list"},
+];
 ///////////////////////////////////////
 
 require("./modules/socket-client.js")(io);
