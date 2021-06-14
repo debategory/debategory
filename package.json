@@ -1,11 +1,13 @@
 {
   "name": "debategory",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha",
   "description": "Open Source speech list for plenary sessions, meetings, conferences and congresses.",
   "main": "index.js",
   "repository": "https://github.com/debategory/debategory",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
   },
   "keywords": [
     "discussion",
@@ -23,6 +25,7 @@
     "express": "^4.17.1",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
+    "i18n": "^0.13.3",
     "jquery": "^3.5.1",
     "jquery-sortablejs": "^1.0.1",
     "passport": "^0.4.1",
@@ -32,5 +35,9 @@
     "twig": "^1.15.4",
     "uikit": "^3.6.16"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-plugin-html": "^6.1.2",
+    "nodemon": "^2.0.7"
+  }
 }
