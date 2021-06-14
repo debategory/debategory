@@ -1,8 +1,11 @@
+<!DOCTYPE html>
 <html lang="de" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login | Debategory</title>
+    <link href="/static/img/Favicon-BW.svg" rel="shortcut icon" type="image/x-icon">
+    <link href="/static/img/AppIcon.png" rel="apple-touch-icon-precomposed">
     <link rel="stylesheet" href="/static/uikit/css/uikit.min.css" />
     <link rel="stylesheet" href="/static/admin/style.css" />
   </head>
@@ -58,5 +61,11 @@
     </noscript>
     <script src="/static/uikit/js/uikit.min.js"></script>
     <script src="/static/uikit/js/uikit-icons.min.js"></script>
+    <script>
+      var today = new Date();
+      if (today.getMonth() == 5) {
+        document.getElementsByTagName("body")[0].classList.add("dg-login-background-pride");
+      }
+    </script>
   </body>
 </html>
