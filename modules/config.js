@@ -3,12 +3,16 @@ const config = require("../config.json");
 const defaults = {
   "server": {
     "port": 3000,
-    "language": "en"
+    "name": "Debategory",
+    "language": "en",
+    "autoLanguage": true
   },
-  "lists": [
-    "Hauptantrag",
-    "Änderungsantrag"
-  ]
+  "speechlist": {
+    "defaultLists": [
+      "Main List",
+      "Secondary List"
+    ]
+  }
 }
 
 function setDefaults(defs, parent=config) {
@@ -17,7 +21,6 @@ function setDefaults(defs, parent=config) {
     if (typeof defs[parameter] == "object" && !Array.isArray(defs[parameter])) {
       objs[parameter] = setDefaults(defs[parameter], config[parameter]);
     } else {
-      //console.log(parameter, defs[parameter]);
       if (typeof parent[parameter] != "undefined") {
         objs[parameter] = parent[parameter];
       } else {

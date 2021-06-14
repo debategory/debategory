@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ pagetitle }} | Debategory</title>
-    <link href="/static/img/Favicon-BW.svg" rel="shortcut icon" type="image/x-icon">
-    <link href="/static/img/AppIcon.png" rel="apple-touch-icon-precomposed">
+    <title>{{ pagetitle }} | {{ config.server.name }}</title>
+    <link href="/static/img/favicon.svg" rel="shortcut icon" type="image/x-icon">
+    <link href="/static/img/appicon.png" rel="apple-touch-icon-precomposed">
     <link rel="stylesheet" href="/static/uikit/css/uikit.min.css" />
     <link rel="stylesheet" href="/static/admin/style.css" />
   </head>
@@ -13,7 +13,7 @@
     <div class="uk-section-secondary">
       <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar="mode: click">
         <div class="uk-navbar-left">
-          <a href="/admin" class="uk-navbar-item uk-logo"><img src="/static/img/Logo-Small-White.svg" /></a>
+          <a href="/admin" class="uk-navbar-item uk-logo"><img src="/static/img/logo.svg" /></a>
           <ul class="uk-navbar-nav uk-visible@l">
             {% for i in sites %}
               <li{% if i.url == site %} class="uk-active"{% endif %}><a href="{{ i.url }}"><span uk-icon="icon: {{ i.icon }}"></span>&nbsp;{{ i.name|e }}</a></li>

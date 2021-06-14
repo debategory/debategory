@@ -75,6 +75,7 @@ client.on("timer.pause", function () {
 client.on("timer.reset", function (time) {
   $("#timer").text(timeToString(time));
   $("#timer").removeClass("uk-text-muted");
+  clearTimeout(timerSlideUpDelay);
   timerSlideUpDelay = setTimeout(function () {
     $("#timer").slideUp();
   }, 3000);

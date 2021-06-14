@@ -15,8 +15,8 @@ const express  = require("express"),
       i18n     = require("./modules/i18n.js");
 
 //////////////// DEBUG ////////////////
-for (var list in config.lists) {
-  slist.new(config.lists[list]);
+for (var list in config.speechlist.defaultLists) {
+  slist.new(config.speechlist.defaultLists[list]);
 }
 slist.switch(0);
 stime.time = 15;
@@ -38,7 +38,7 @@ app.set('cache', false);
 twig.cache(false);
 
 app.locals.sites = pages;
-app.locals.locale = config.server.language;
+app.locals.config = config;
 
 app.use(flash());
 app.use(express.urlencoded({
