@@ -5,27 +5,27 @@
   <div class="uk-card uk-card-small uk-card-default uk-card-body">
     <div uk-grid>
       <div class="uk-width-expand uk-text-truncate">
-        <span class="uk-h5 uk-text-muted uk-text-uppercase">Titel</span><br />
+        <span class="uk-h5 uk-text-muted uk-text-uppercase">{{ __("Title") }}</span><br />
         <span class="uk-h2" id="speechlistTitle"></span>
       </div>
       <div id="speechtimer">
-        <span class="uk-h5 uk-text-muted uk-text-uppercase">Redezeit</span><br />
+        <span class="uk-h5 uk-text-muted uk-text-uppercase">{{ __("Speech time") }}</span><br />
         <span class="uk-h2">
         <span id="speechtimerTime">00:00</span>
           <div class="uk-button-group">
-            <button class="uk-button uk-button-small" disabled uk-tooltip="title: Redezeit starten; delay: 300; pos: bottom" id="speechtimerStart"><span uk-icon="icon: play"></span></button>
-            <button class="uk-button uk-button-small" uk-tooltip="title: Redezeit pausieren; delay: 300; pos: bottom" id="speechtimerPause" style="display: none;"><span uk-icon="icon: close"></span></button>
-            <button class="uk-button uk-button-small" disabled uk-tooltip="title: Redezeit zurücksetzen; delay: 300; pos: bottom" id="speechtimerReset"><span uk-icon="icon: refresh"></span></button>
+            <button class="uk-button uk-button-small" disabled uk-tooltip="title: {{ __("Start speech time") }}; delay: 300; pos: bottom" id="speechtimerStart"><span uk-icon="icon: play"></span></button>
+            <button class="uk-button uk-button-small" uk-tooltip="title: {{ __("Pause speech time") }}; delay: 300; pos: bottom" id="speechtimerPause" style="display: none;"><span uk-icon="icon: close"></span></button>
+            <button class="uk-button uk-button-small" disabled uk-tooltip="title: {{ __("Reset speech time") }}; delay: 300; pos: bottom" id="speechtimerReset"><span uk-icon="icon: refresh"></span></button>
           </div>
         </span>
       </div>
       <div uk-grid>
         <div class="uk-width-auto">
-          <span class="uk-h5 uk-text-muted uk-text-uppercase uk-width-1-5">Datum</span><br />
+          <span class="uk-h5 uk-text-muted uk-text-uppercase uk-width-1-5">{{ __("Date") }}</span><br />
           <span class="uk-h2" id="clockDate"></span>
         </div>
         <div class="uk-width-auto">
-          <span class="uk-h5 uk-text-muted uk-text-uppercase uk-width-1-5">Uhrzeit</span><br />
+          <span class="uk-h5 uk-text-muted uk-text-uppercase uk-width-1-5">{{ __("Time") }}</span><br />
           <span class="uk-h2" id="clockTime"></span>
         </div>
       </div>
@@ -41,38 +41,20 @@
         <div class="uk-card uk-card-small uk-card-default">
           <div class="uk-card-body">
             <div class="uk-margin">
-              <input type="text" class="uk-input speechlist-input" placeholder="Person hinzufügen...">
+              <input type="text" class="uk-input speechlist-input" data-placeholder-closed="{{ __("List closed.") }}" placeholder="{{ __("Add person...") }}">
             </div>
-            <div class="uk-button-group uk-visible@xl">
-              <button class="uk-button uk-button-secondary speechlist-next"><span uk-icon="chevron-double-right"></span>&nbsp;Nächste:r</button>
-              <button class="uk-button speechlist-close"><span uk-icon="lock"></span>&nbsp;Schließen</button>
-              <button class="uk-button uk-button-danger speechlist-reopen" style="display: none;"><span uk-icon="unlock"></span>&nbsp;Öffnen</button>
-              <button class="uk-button speechlist-clear"><span uk-icon="trash"></span>&nbsp;Leeren</button>
-              <button class="uk-button speechlist-settings"><span uk-icon="settings"></span>&nbsp;Einstellungen</button>
-              <button class="uk-button speechlist-show"><span uk-icon="tv"></span>&nbsp;Anzeigen</button>
-              <button class="uk-button speechlist-shown" disabled style="display: none;"><span uk-icon="check"></span>&nbsp;Angezeigt</button>
-            </div>
-            <div class="uk-button-group uk-visible@l uk-hidden@xl">
-              <button class="uk-button uk-button-secondary speechlist-next"><span uk-icon="chevron-double-right"></span>&nbsp;Nächste:r</button>
-              <button class="uk-button speechlist-close" uk-tooltip="title: Liste schließen; delay: 300; pos: bottom"><span uk-icon="lock"></span></button>
-              <button class="uk-button uk-button-danger speechlist-reopen" uk-tooltip="title: Liste wieder öffnen; delay: 300; pos: bottom" style="display: none;"><span uk-icon="unlock"></span></button>
-              <button class="uk-button speechlist-clear" uk-tooltip="title: Liste leeren; delay: 300; pos: bottom"><span uk-icon="trash"></span></button>
-              <button class="uk-button speechlist-settings" uk-tooltip="title: Listeneinstellungen; delay: 300; pos: bottom"><span uk-icon="settings"></span></button>
-              <button class="uk-button speechlist-show" uk-tooltip="title: Liste anzeigen; delay: 300; pos: bottom"><span uk-icon="tv"></span></button>
-              <button class="uk-button speechlist-shown" disabled uk-tooltip="title: Liste wird angezeigt; delay: 300; pos: bottom" style="display: none;"><span uk-icon="check"></span></button>
-            </div>
-            <div class="uk-button-group uk-hidden@l">
-              <button class="uk-button uk-button-secondary speechlist-next" uk-tooltip="title: Nächste Person; delay: 300; pos: bottom"><span uk-icon="chevron-double-right"></span></button>
-              <button class="uk-button speechlist-close" uk-tooltip="title: Liste schließen; delay: 300; pos: bottom"><span uk-icon="lock"></span></button>
-              <button class="uk-button uk-button-danger speechlist-reopen" uk-tooltip="title: Liste wieder öffnen; delay: 300; pos: bottom" style="display: none;"><span uk-icon="unlock"></span></button>
-              <button class="uk-button speechlist-clear" uk-tooltip="title: Liste leeren; delay: 300; pos: bottom"><span uk-icon="trash"></span></button>
-              <button class="uk-button speechlist-settings" uk-tooltip="title: Listeneinstellungen; delay: 300; pos: bottom"><span uk-icon="settings"></span></button>
-              <button class="uk-button speechlist-show" uk-tooltip="title: Liste anzeigen; delay: 300; pos: bottom"><span uk-icon="tv"></span></button>
-              <button class="uk-button speechlist-shown" disabled uk-tooltip="title: Liste wird angezeigt; delay: 300; pos: bottom" style="display: none;"><span uk-icon="check"></span></button>
+            <div class="uk-button-group">
+              <button class="uk-button uk-button-secondary speechlist-next" uk-tooltip="title: {{ __("Next person") }}; delay: 300; pos: bottom"><span uk-icon="chevron-double-right"></span><span class="uk-visible@l">&nbsp;{{ __("Next") }}</span></button>
+              <button class="uk-button speechlist-close" uk-tooltip="title: {{ __("Close list") }}; delay: 300; pos: bottom"><span uk-icon="lock"></span><span class="uk-visible@xl">&nbsp;{{ __("Close") }}</span></button>
+              <button class="uk-button uk-button-danger speechlist-reopen" uk-tooltip="title: {{ __("Reopen list") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="unlock"></span><span class="uk-visible@xl">&nbsp;{{ __("Open") }}</span></button>
+              <button class="uk-button speechlist-clear" uk-tooltip="title: {{ __("Empty list") }}; delay: 300; pos: bottom"><span uk-icon="trash"></span><span class="uk-visible@xl">&nbsp;{{ __("Empty") }}</span></button>
+              <button class="uk-button speechlist-settings" uk-tooltip="title: {{ __("List settings") }}; delay: 300; pos: bottom"><span uk-icon="settings"></span><span class="uk-visible@xl">&nbsp;{{ __("Settings") }}</span></button>
+              <button class="uk-button speechlist-show" uk-tooltip="title: {{ __("Display list") }}; delay: 300; pos: bottom"><span uk-icon="tv"></span><span class="uk-visible@xl">&nbsp;{{ __("Display") }}</span></button>
+              <button class="uk-button speechlist-shown" disabled uk-tooltip="title: {{ __("List is displayed") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="check"></span><span class="uk-visible@xl">&nbsp;{{ __("Displayed") }}</span></button>
             </div>
           </div>
           <div class="uk-card-footer">
-            <p class="speechlist-empty uk-margin-remove-bottom uk-text-center uk-text-italic uk-text-light uk-text-muted">Liste leer.</p>
+            <p class="speechlist-empty uk-margin-remove-bottom uk-text-center uk-text-italic uk-text-light uk-text-muted">{{ __("List empty.") }}</p>
             <ul class="uk-list uk-margin-remove-top uk-list-striped uk-text-capitalize uk-list-collapse speechlist" style="display: none;" uk-sortable="handle: .uk-drag"></ul>
           </div>
         </div>
@@ -86,28 +68,33 @@
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-body">
-          <h2 class="uk-modal-title">Einstellungen</h2>
+          <h2 class="uk-modal-title">{{ __("Settings") }}</h2>
           <form class="uk-form-stacked">
             <div class="uk-margin">
               <div class="uk-form-controls">
-                <input class="uk-input" id="settingsTitle" type="text" placeholder="Titel">
-              </div>
-            </div>
-            <div class="uk-margin">
-              <label><input class="uk-checkbox" type="checkbox" id="settingsSpeechtimeEnable" checked> Redezeit aktivieren</label>
-              <div class="uk-form-controls uk-flex uk-flex-center uk-flex-middle" id="settingsSpeechtimeInput">
-                <input class="uk-input uk-form-width-xsmall uk-text-right" type="tel" placeholder="00" max="99" min="0" maxlength="2">
-                <p>&nbsp;:&nbsp;</p>
-                <input class="uk-input uk-form-width-xsmall" type="tel" placeholder="00" maxlength="2">
+                <input class="uk-input" id="settingsTitle" type="text" placeholder="{{ __("Title") }}">
               </div>
             </div>
             <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-              <label><input class="uk-checkbox" type="checkbox" checked> Automatisch anzeigen</label>
+              <label><input class="uk-checkbox" type="checkbox" id="settingsUseFirstList"> {{ __("Apply settings from the first list") }}</label>
+            </div>
+            <div id="settingsIndividualSettings">
+              <div class="uk-margin">
+                <label><input class="uk-checkbox" type="checkbox" id="settingsSpeechtimeEnable" checked> {{ __("Activate speech time") }}</label>
+                <div class="uk-form-controls uk-flex uk-flex-center uk-flex-middle" id="settingsSpeechtimeInput">
+                  <input class="uk-input uk-form-width-xsmall uk-text-right" type="tel" placeholder="00" max="99" min="0" maxlength="2">
+                  <p>&nbsp;:&nbsp;</p>
+                  <input class="uk-input uk-form-width-xsmall" type="tel" placeholder="00" maxlength="2">
+                </div>
+              </div>
+              <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                <label><input class="uk-checkbox" type="checkbox" id="settingsAutoShow" checked> {{ __("Display automatically") }}</label>
+              </div>
             </div>
           </form>
           <div class="uk-float-right">
-            <button class="uk-button uk-modal-close" type="button"><span uk-icon="close"></span> Abbrechen</button>
-            <button class="uk-button uk-button-secondary" type="button"><span uk-icon="check"></span> Speichern</button>
+            <button class="uk-button uk-modal-close" type="button"><span uk-icon="close"></span> {{ __("Cancel") }}</button>
+            <button class="uk-button uk-button-secondary" type="button"><span uk-icon="check"></span> {{ __("Save") }}</button>
           </div>
         </div>
     </div>

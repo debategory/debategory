@@ -94,7 +94,7 @@ function showSettings(list) {
 
 admin.on("disconnect", function(a, b) {
   connected = false;
-  $("#saying").text("Verbindung zum Server verloren...");
+  $("#sayingLostConnection").show();
   $("#loader").fadeIn("slow");
 });
 
@@ -109,7 +109,8 @@ admin.on("loadList", function(list, object) {
   if (object.closed) {
     $($(".speechlist-container")[list]).find(".speechlist-close").hide();
     $($(".speechlist-container")[list]).find(".speechlist-reopen").show();
-    $($(".speechlist-input")[list]).prop("disabled", true).val("Liste geschlossen.");
+    $($(".speechlist-input")[list]).prop("disabled", true).val($(".speechlist-input").first().data("placeholder-closed"));
+
   } else {
       $($(".speechlist-container")[list]).find(".speechlist-reopen").hide();
       $($(".speechlist-container")[list]).find(".speechlist-close").show();
@@ -140,7 +141,7 @@ admin.on("append", function(list, data) {
 admin.on("close", function(list) {
   $($(".speechlist-container")[list]).find(".speechlist-close").hide();
   $($(".speechlist-container")[list]).find(".speechlist-reopen").show();
-  $($(".speechlist-input")[list]).prop("disabled", true).val("Liste geschlossen.");
+  $($(".speechlist-input")[list]).prop("disabled", true).val($(".speechlist-input").first().data("placeholder-closed"));
 });
 
 admin.on("reopen", function(list) {

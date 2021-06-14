@@ -8,6 +8,8 @@ i18n.configure({
 
 module.exports = function(req, res, next) {
   i18n.init(req, res);
-  res.setLocale(req.app.locals.locale);
+  if (!config.server.autoLanguage) {
+    res.setLocale(config.server.language);
+  }
   return next();
 };
