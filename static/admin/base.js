@@ -1,10 +1,3 @@
-const sayings = [
-  "<b>Debategory</b> ist übrigens Open-Source!",
-  "Du kannst <b>Namen</b> in der Redeliste auch <b>bearbeiten</b>, indem du doppelt auf sie klickst.",
-  "Hast du den <b>Dark Mode</b> schon ausprobiert? Klicke dafür einfach auf das <span uk-icon=\"icon: paint-bucket\" class=\"uk-text-top\"></span>-Symbol.",
-  "Danke, dass du <b>Debategory</b> benutzt!",
-  "Wenn du Feedback zu <b>Debategory</b> hast, schreib uns einfach an <a href=\"mailto:support@debategory.eu\">support@debategory.eu</a>."
-];
 var finished = false;
 var isFullscreen = false;
 var darkmodeStyle = null;
@@ -49,35 +42,32 @@ function toggleFullscreen() {
     }
   }
   isFullscreen = !isFullscreen;
-  return false;
 }
 
-function shuffleSayings(used = []) {
-  var cSayings = [];
-  if (used.length == sayings.length) {
-    $("#saying").fadeOut("slow", function () {
-      $($(this).parent().children()[0]).fadeOut(function () {
-        $(this).parent().prepend("<span uk-icon=\"icon: close; ratio: 4\"></span>").hide().fadeIn();
-        $("#saying").html("Das dauert aber ganz schön lange... Bitte lade die Seite neu.").fadeIn("slow");
-        $(this).remove();
-      });
-    });
-    return;
-  }
-  for (var i in sayings) {
-    if (used.indexOf(i) != -1) continue;
-    cSayings.push(i);
-  }
-  var index = Math.floor(Math.random() * cSayings.length);
+function shuffleSayings(oldindex = -1) {
   $("#saying").fadeOut("slow", function () {
-    $(this).html(sayings[cSayings[index]]).fadeIn("slow");
-  });
-  if (finished) {
-    $("#loader").fadeOut("slow");
-    return;
-  }
-  used.push(cSayings[index]);
-  setTimeout(shuffleSayings, 3000, used);
+    $("#saying span").hide();
+    if (finished) {
+      $("#loader").fadeOut("slow");
+      return;
+    }
+    if (oldindex != -1) {
+      $($("#sayings").children()[oldindex]).remove();
+    }
+    var length = $("#sayings").children().length;
+    if (length == 0) {
+      $("#sayingSpinner").fadeOut(function () {
+        $(this).remove();
+        $("#saying").parent().prepend("<span uk-icon=\"icon: close; ratio: 4\"></span>").hide().fadeIn();
+        $("#sayingBadConnection").fadeIn();
+      });
+      return;
+    }
+    var index = Math.floor(Math.random() * length);
+    $($("#sayings").children()[index]).show();
+    $("#sayings").show();
+    setTimeout(shuffleSayings, 3000, index);
+  }).fadeIn("slow");
 }
 
 function finishSayings() {
@@ -91,7 +81,8 @@ function setTime() {
 }
 
 $("#toggleFullscreen").click(function () {
-  toggleFullscreen()
+  toggleFullscreen();
+  return false;
 });
 
 $("#toggleDarkmode").click(function () {
@@ -126,13 +117,13 @@ $(function() {
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
               @@@@@@@@@@@@@@@@
               @@@@@@@@@@@@@@/    Debategory – the
-              @@@@@@@@@@@@@      open speechlist
+              @@@@@@@@@@@@@      open speech list
               @@@@@@@@@@@        software
               @@@@@@@@@
-              @@@@@@@.      https://debategory.eu
+              @@@@@@@.     https://debategory.org
               @@@@@@
-              @@@@          Feedback?  Mail us at
-              @@            support@debategory.eu
+              @@@@         Feedback?   Mail us at
+              @@           support@debategory.org
   `);
 });
 

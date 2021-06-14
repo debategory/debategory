@@ -22,12 +22,12 @@ $(function() {
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
               @@@@@@@@@@@@@@@@
               @@@@@@@@@@@@@@/    Debategory – the
-              @@@@@@@@@@@@@      open speechlist
+              @@@@@@@@@@@@@      open speech list
               @@@@@@@@@@@        software
               @@@@@@@@@
-              @@@@@@@.      https://debategory.eu
+              @@@@@@@.     https://debategory.org
               @@@@@@
-              @@@@          Feedback?  Mail us at
-              @@            support@debategory.eu
+              @@@@         Feedback?   Mail us at
+              @@           support@debategory.org
   `);
 });

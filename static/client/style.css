@@ -1,15 +1,15 @@
 .dg-bubble:after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-  top: 99%;
-	left: 25%;
-	width: 0;
-	height: 0;
 	border: 34px solid transparent;
-	border-top-color: #ffffff;
 	border-bottom: 0;
 	border-left: 0;
-	margin-left: -17px;
+	border-top-color: #ffffff;
+	bottom: 0;
+	content: '';
+	height: 0;
+	left: 25%;
 	margin-bottom: -34px;
+	margin-left: -17px;
+	position: absolute;
+  top: 99%;
+	width: 0;
 }

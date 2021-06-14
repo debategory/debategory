@@ -1,6 +1,7 @@
 const client = io("/client");
 const animationspeed = "fast";
 var list = [];
+var timerSlideUpDelay = null;
 
 function updateList(data) {
   if (data.length == 0) {
@@ -64,6 +65,7 @@ client.on("timer.load", function (data) {
 client.on("timer.start", function () {
   $("#timer").removeClass("uk-text-muted");
   $("#timer").slideDown();
+  clearTimeout(timerSlideUpDelay);
 });
 
 client.on("timer.pause", function () {
@@ -71,10 +73,11 @@ client.on("timer.pause", function () {
 });
 
 client.on("timer.reset", function (time) {
-  $("#timer").slideUp();
   $("#timer").text(timeToString(time));
   $("#timer").removeClass("uk-text-muted");
-
+  timerSlideUpDelay = setTimeout(function () {
+    $("#timer").slideUp();
+  }, 3000);
 });
 
 client.on("timer.tick", function (time) {

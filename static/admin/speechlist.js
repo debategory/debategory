@@ -179,7 +179,7 @@ admin.on("edit", function (list, data) {
 
 admin.on("timer.load", function (timer) {
   $("#speechtimerTime").text(timeToString(timer["current"])).removeClass("uk-text-warning").removeClass("uk-text-danger");
-  $("#speechtimerBar").attr("max", timer["time"]).val(timer["current"]).removeClass("dg-warning");
+  $("#speechtimerBar").attr("max", timer["time"]).val(timer["current"]).removeClass("dg-progress-warning");
   if (timer["running"]) {
     $("#speechtimerStart").hide();
     $("#speechtimerPause").show();
@@ -192,7 +192,7 @@ admin.on("timer.load", function (timer) {
     $("#speechtimerStart").prop("disabled", true);
     $("#speechtimerTime").addClass("uk-text-danger");
   } else if (timer["current"] < 10) {
-    $("#speechtimerBar").addClass("dg-warning");
+    $("#speechtimerBar").addClass("dg-progress-warning");
     $("#speechtimerTime").addClass("uk-text-warning");
   }
   $("#speechtimerReset").prop("disabled", (timer["running"] || timer["current"] == timer["time"]));
@@ -205,7 +205,7 @@ admin.on("timer.tick", function (time) {
   if (time == 0) {
     $("#speechtimerTime").removeClass("uk-text-warning").addClass("uk-text-danger");
   } else if (time < 10) {
-    $("#speechtimerBar").addClass("dg-warning");
+    $("#speechtimerBar").addClass("dg-progress-warning");
     $("#speechtimerTime").addClass("uk-text-warning");
   }
 });
@@ -224,7 +224,7 @@ admin.on("timer.pause", function () {
 
 admin.on("timer.reset", function (time) {
   $("#speechtimerTime").text(timeToString(time)).removeClass("uk-text-warning").removeClass("uk-text-danger");
-  $("#speechtimerBar").attr("max", time).val(time).removeClass("dg-warning");
+  $("#speechtimerBar").attr("max", time).val(time).removeClass("dg-progress-warning");
   $("#speechtimerStart").show();
   $("#speechtimerPause").hide();
   $("#speechtimerReset").prop("disabled", true);

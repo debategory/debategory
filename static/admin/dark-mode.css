@@ -38,6 +38,6 @@ html, body {
   background-color: #e5e5e5;
 }
 
-.uk-input:disabled {
-  background: transparent !important;
+.uk-card-secondary>:not([class*=uk-card-media]) .uk-input:disabled, .uk-input:disabled {
+  background: transparent;
 }
