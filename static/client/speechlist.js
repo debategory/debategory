@@ -55,9 +55,18 @@ function timeToString(timestamp) {
 }
 
 client.on("timer.load", function (data) {
+  clearTimeout(timerSlideUpDelay);
+  if (data.time == false) {
+    $("#timer").slideUp();
+    return;
+  }
   $("#timer").text(timeToString(data.current));
   if (data.running || data.paused) {
     $("#timer").slideDown();
+  } else {
+    timerSlideUpDelay = setTimeout(function () {
+      $("#timer").slideUp();
+    }, 3000);
   }
   $("#timer").removeClass("uk-text-muted");
 });
@@ -109,15 +118,19 @@ client.on("list.clear", function () {
 
 client.on("list.next", function () {
   list.shift();
-  $("#speechlist :first").slideUp(animationspeed, function() { $(this).remove(); });
+  $("#speechlist :first").slideUp(animationspeed, function () { $(this).remove(); });
 });
 
 client.on("list.delete", function (index) {
   list.splice(index, 1);
-  $($("#speechlist").children()[index]).slideUp(animationspeed, function() { $(this).remove(); });
+  $($("#speechlist").children()[index]).slideUp(animationspeed, function () { $(this).remove(); });
 });
 
-$("body").on("DOMSubtreeModified", "#speechlist", function() {
+client.on("list.title_change", function (title) {
+  $("#title").text(title);
+});
+
+$("body").on("DOMSubtreeModified", "#speechlist", function () {
   $("#speechlist li").removeClass("uk-text-bold");
   $("#speechlist :first").addClass("uk-text-bold");
 });

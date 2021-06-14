@@ -1,4 +1,5 @@
 const EventEmitter = require("eventemitter2");
+
 const events = [
   "append",
   "next",
@@ -18,7 +19,9 @@ class Speechlist extends EventEmitter {
     this._title = title;
     this._closed = false;
     this._list = [];
-    this._options = null;
+    this._options = {
+      speechtime: false
+    };
   }
 
   append(name) {
@@ -78,7 +81,8 @@ class Speechlist extends EventEmitter {
     return {
       "title": this.title,
       "list": this._list,
-      "closed": this._closed
+      "closed": this._closed,
+      "options": this._options
     };
   }
 
@@ -135,18 +139,115 @@ class Speechlist extends EventEmitter {
   }
 }
 
+class Speechtimer extends EventEmitter {
+  static _tick(object, dt) {
+    object._current -= (dt / 1000);
+    object.emit("tick", object._current);
+    if (object._current <= 0) {
+      object._current = 0;
+      object.pause();
+    }
+    return true;
+  }
+
+  constructor(time) {
+    super();
+    this._time = time;
+    this._current = time;
+    this._running = false;
+    this._interval = null;
+  }
+
+  reset() {
+    this._running = false;
+    this._current = this._time;
+    clearInterval(this._interval);
+    this.emit("reset", this._time);
+    return true;
+  }
+
+  start() {
+    if (this._running || this._current <= 0 || this._time == null) return false;
+    this._running = true;
+    this._interval = setInterval(Speechtimer._tick, 1000, this, 1000);
+    this.emit("start");
+    return true;
+  }
+
+  pause() {
+    if (!this._running) return false;
+    this._running = false;
+    clearInterval(this._interval);
+    this.emit("pause");
+    return true;
+  }
+
+  set time(time) {
+    this._time = time;
+    if (this._current == null) {
+      this._current = time;
+    }
+    this.emit("set_time", time);
+    if (!this._running) {
+      this.reset();
+    }
+    return true;
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  get current() {
+    return this._current;
+  }
+
+  get running() {
+    return this._running;
+  }
+
+  get paused() {
+    return (!this._running && this._time != this._current);
+  }
+
+  get stopped() {
+    return !this.running;
+  }
+
+  get object() {
+    return {
+      "running": this.running,
+      "paused": this.paused,
+      "stopped": this.stopped,
+      "time": this.time,
+      "current": this.current
+    };
+  }
+}
+
 class SpeechlistSwitch extends EventEmitter {
   constructor() {
     super();
     this.id = false;
+    this.timer = new Speechtimer(false);
     this._lists = [];
     this._currentListeners = [];
+    this._internalListeners = [];
+  }
+
+  _eventhandler(this, event, data, list) {
+    console.log(event, data, sls, this);
   }
 
   new(title) {
-    this._lists.push(new Speechlist(title));
-    this.emit("manager.new", this._lists.length - 1);
-    return (this._lists.length - 1);
+    var id = this._lists.push(new Speechlist(title)) - 1;
+    (function (obj) {
+      obj._internalListeners.push(obj._lists[id].onAny((event, data) => {
+        obj._eventhandler(obj, event, data, this);
+      }), {objectify: true})
+    })(this);
+    this.emit("manager.new", id);
+    return (id);
   }
 
   switch(id) {
@@ -165,7 +266,15 @@ class SpeechlistSwitch extends EventEmitter {
         }, {objectify: true}));
       })(this, events[i]);
     }
+    this._currentListeners.push(this._lists[id].on("options_change", (data) => {
+      this.timer.time = this._lists[id].options.speechtime;
+    }, {objectify: true}));
     this.id = id;
+    this.timer.time = this._lists[id].options.speechtime;
+    this.timer.reset();
+    if (this._lists[id].length > 0) {
+      this.timer.start();
+    }
     this.emit("manager.switch", id);
     return true;
   }
@@ -187,7 +296,9 @@ class SpeechlistSwitch extends EventEmitter {
     } else if (id < this.id) {
       this.id--;
     }
+    this._internalListeners[id].off();
     delete this._lists[id];
+    delete this._internalListeners[id];
     this._lists.splice(id, 1);
     this.emit("manager.remove", id);
     return true;

@@ -11,15 +11,15 @@ const express  = require("express"),
       routes   = require("./modules/routes.js"),
       auth     = require("./modules/authentication.js"),
       slist    = require("./modules/speechlist.js"),
-      stime    = require("./modules/speechtime.js"),
       i18n     = require("./modules/i18n.js");
 
 //////////////// DEBUG ////////////////
 for (var list in config.speechlist.defaultLists) {
   slist.new(config.speechlist.defaultLists[list]);
 }
+slist.get(0).options = {"mirrorSettings": false, "speechtime": 180, "autoDisplay": false};
+slist.get(1).options = {"mirrorSettings": false, "speechtime": false, "autoDisplay": true};
 slist.switch(0);
-stime.time = 15;
 
 var pages = [
   {"name": "Redeliste", "url": "/admin/speechlist", "icon": "list"},

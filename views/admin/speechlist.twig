@@ -69,7 +69,8 @@
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-body">
           <h2 class="uk-modal-title">{{ __("Settings") }}</h2>
-          <form class="uk-form-stacked">
+          <form class="uk-form-stacked" id="settingsForm">
+            <input type="hidden" id="settingsListId" value="-1">
             <div class="uk-margin">
               <div class="uk-form-controls">
                 <input class="uk-input" id="settingsTitle" type="text" placeholder="{{ __("Title") }}">
@@ -82,19 +83,19 @@
               <div class="uk-margin">
                 <label><input class="uk-checkbox" type="checkbox" id="settingsSpeechtimeEnable" checked> {{ __("Activate speech time") }}</label>
                 <div class="uk-form-controls uk-flex uk-flex-center uk-flex-middle" id="settingsSpeechtimeInput">
-                  <input class="uk-input uk-form-width-xsmall uk-text-right" type="tel" placeholder="00" max="99" min="0" maxlength="2">
+                  <input class="uk-input uk-form-width-xsmall uk-text-right" id="settingsSpeechtimeMinutes" type="tel" placeholder="00" max="99" min="0" maxlength="2">
                   <p>&nbsp;:&nbsp;</p>
-                  <input class="uk-input uk-form-width-xsmall" type="tel" placeholder="00" maxlength="2">
+                  <input class="uk-input uk-form-width-xsmall" id="settingsSpeechtimeSeconds" type="tel" placeholder="00" min="0" max="59" maxlength="2">
                 </div>
               </div>
               <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                <label><input class="uk-checkbox" type="checkbox" id="settingsAutoShow" checked> {{ __("Display automatically") }}</label>
+                <label><input class="uk-checkbox" type="checkbox" id="settingsAutoDisplay" checked> {{ __("Display automatically") }}</label>
               </div>
             </div>
           </form>
           <div class="uk-float-right">
             <button class="uk-button uk-modal-close" type="button"><span uk-icon="close"></span> {{ __("Cancel") }}</button>
-            <button class="uk-button uk-button-secondary" type="button"><span uk-icon="check"></span> {{ __("Save") }}</button>
+            <button class="uk-button uk-button-secondary" id="settingsSave" type="submit" value="submit" form="settingsForm"><span uk-icon="check"></span> {{ __("Save") }}</button>
           </div>
         </div>
     </div>

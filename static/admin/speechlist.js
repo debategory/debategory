@@ -84,7 +84,27 @@ function speechtimeDisable() {
 }
 
 function showSettings(list) {
-  $("#settingsTitle").val(lists[list].title);
+  if (list == 0) {
+    $("#settingsUseFirstList").parent().parent().hide();
+    $("#settingsIndividualSettings").show();
+  } else {
+    $("#settingsUseFirstList").parent().parent().show();
+  }
+  $("#settingsListId").val(list);
+  var list = lists[list];
+  $("#settingsTitle").val(list.title);
+  $("#settingsUseFirstList").prop("checked", list.options.mirrorSettings);
+  if (list.options.speechtime == false || list.options.speechtime <= 0) {
+    $("#settingsSpeechtimeEnable").prop("checked", false).trigger("change");
+    $("#settingsSpeechtimeInput").hide();
+  } else {
+    $("#settingsSpeechtimeEnable").prop("checked", true).trigger("change");
+    $("#settingsSpeechtimeInput").show();
+    var sec = list.options.speechtime % 60;
+    $("#settingsSpeechtimeSeconds").val(String(sec).padStart(2, "0"));
+    $("#settingsSpeechtimeMinutes").val(String((list.options.speechtime - sec) / 60).padStart(2, "0"));
+  }
+  $("#settingsAutoDisplay").prop("checked", list.options.autoDisplay);
   UIkit.modal($("#settings")).show();
 }
 
@@ -105,12 +125,11 @@ admin.on("connect", function(a, b) {
   }
 });
 
-admin.on("loadList", function(list, object) {
+admin.on("load_list", function(list, object) {
   if (object.closed) {
     $($(".speechlist-container")[list]).find(".speechlist-close").hide();
     $($(".speechlist-container")[list]).find(".speechlist-reopen").show();
     $($(".speechlist-input")[list]).prop("disabled", true).val($(".speechlist-input").first().data("placeholder-closed"));
-
   } else {
       $($(".speechlist-container")[list]).find(".speechlist-reopen").hide();
       $($(".speechlist-container")[list]).find(".speechlist-close").show();
@@ -161,14 +180,14 @@ admin.on("clear", function (list) {
 });
 
 admin.on("delete", function (list, index) {
-  $($($(".speechlist")[list]).children()[index]).slideUp(animationspeed, function() {
+  $($($(".speechlist")[list]).children()[index]).slideUp(animationspeed, function () {
     $(this).remove();
     checkEmpty(list);
   });
 });
 
 admin.on("next", function (list) {
-  $($(".speechlist")[list]).children(":first").slideUp(animationspeed, function() {
+  $($(".speechlist")[list]).children(":first").slideUp(animationspeed, function () {
     $(this).remove();
     checkEmpty(list);
   });
@@ -178,7 +197,20 @@ admin.on("edit", function (list, data) {
   $($($(".speechlist")[list]).children()[data[0]]).children("span").text(data[1]);
 });
 
+admin.on("title_change", function (list, data) {
+  lists[list].title = data;
+});
+
+admin.on("options_change", function (list, data) {
+  lists[list].options = data;
+});
+
 admin.on("timer.load", function (timer) {
+  if (timer.time == false) {
+    $("#speechtimer").slideUp("fast");
+    return finishSayings();
+  }
+  $("#speechtimer").slideDown("fast");
   $("#speechtimerTime").text(timeToString(timer["current"])).removeClass("uk-text-warning").removeClass("uk-text-danger");
   $("#speechtimerBar").attr("max", timer["time"]).val(timer["current"]).removeClass("dg-progress-warning");
   if (timer["running"]) {
@@ -224,8 +256,9 @@ admin.on("timer.pause", function () {
 });
 
 admin.on("timer.reset", function (time) {
-  $("#speechtimerTime").text(timeToString(time)).removeClass("uk-text-warning").removeClass("uk-text-danger");
   $("#speechtimerBar").attr("max", time).val(time).removeClass("dg-progress-warning");
+  if (time === false) return;
+  $("#speechtimerTime").text(timeToString(time)).removeClass("uk-text-warning").removeClass("uk-text-danger");
   $("#speechtimerStart").show();
   $("#speechtimerPause").hide();
   $("#speechtimerReset").prop("disabled", true);
@@ -264,7 +297,7 @@ $(".speechlist-clear").click(function () {
   admin.emit("clear", getListIndex(this));
 });
 
-$(".speechlist-settings").click(function() {
+$(".speechlist-settings").click(function () {
   showSettings(getListIndex(this));
 });
 
@@ -284,12 +317,12 @@ $("#speechtimerReset").click(function () {
   admin.emit("timer_reset");
 });
 
-$("body").on("click", ".speechlist-item-edit", function() {
+$("body").on("click", ".speechlist-item-edit", function () {
   editItem($(this).parents(".uk-visible-toggle").children()[0]);
   return false;
 });
 
-$("body").on("click", ".speechlist-item-delete", function() {
+$("body").on("click", ".speechlist-item-delete", function () {
   var id = $(this).parents(".uk-visible-toggle").index();
   admin.emit("delete", getListIndex(this), id);
   return false;
@@ -309,7 +342,7 @@ UIkit.util.on('.speechlist', 'moved', function (a, b, c) {
   console.log(c);
 });
 
-$("body").on("mouseover", ".speechlist li", function() {
+$("body").on("mouseover", ".speechlist li", function () {
   $(this).append(`<ul class="uk-align-right uk-flex-inline uk-iconnav">
     <li><a href="#" class="speechlist-item-prioritise" uk-icon="icon: bolt"></a></li>
     <li><a href="#" class="speechlist-item-edit" uk-icon="icon: pencil"></a></li>
@@ -320,15 +353,44 @@ $("body").on("mouseover", ".speechlist li", function() {
   });
 });
 
-$("body").on("DOMSubtreeModified", ".speechlist", function() {
+$("body").on("DOMSubtreeModified", ".speechlist", function () {
   $(this).children().removeClass("uk-text-bolder");
   $($(this).children()[0]).addClass("uk-text-bolder");
 });
 
-$("#settingsSpeechtimeEnable").change(function() {
+$("#settingsSpeechtimeEnable").change(function () {
   if ($(this).prop("checked")) {
     $("#settingsSpeechtimeInput").slideDown(animationspeed);
   } else {
     $("#settingsSpeechtimeInput").slideUp(animationspeed);
   }
+});
+
+$("#settingsUseFirstList").change(function () {
+  if ($(this).prop("checked")) {
+    $("#settingsIndividualSettings").slideUp(animationspeed);
+  } else {
+    $("#settingsIndividualSettings").slideDown(animationspeed);
+  }
+});
+
+$("#settingsForm").submit("submit", function () {
+  var list = $("#settingsListId").val();
+  var optionset = {
+    mirrorSettings: $("#settingsUseFirstList").prop("checked"),
+    speechtime: false,
+    autoDisplay: $("#settingsAutoDisplay").prop("checked")
+  };
+  if ($("#settingsSpeechtimeEnable").prop("checked")) {
+    var speechtime = parseInt($("#settingsSpeechtimeMinutes").val().padStart(2, "0")) * 60 + parseInt($("#settingsSpeechtimeSeconds").val().padStart(2, "0"));
+    if (!isNaN(speechtime)) {
+      optionset.speechtime = speechtime;
+    }
+  }
+  admin.emit("options_change", list, optionset);
+  if ($("#settingsTitle").val().trim() != lists[list].title) {
+    admin.emit("title_change", list, $("#settingsTitle").val().trim());
+  }
+  UIkit.modal("#settings").hide();
+  return false;
 });

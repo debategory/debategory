@@ -15,7 +15,7 @@ html, body {
   color: #555555;
 }
 
-.uk-card-secondary>:not([class*=uk-card-media]) .uk-button-secondary, .uk-button-secondary {
+.uk-card-secondary>:not([class*=uk-card-media]) .uk-button-secondary, .uk-light .uk-button-secondary, .uk-button-secondary {
   background-color: #757575;
   color: #ffffff;
 }

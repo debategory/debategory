@@ -90,7 +90,7 @@ $("#toggleDarkmode").click(function () {
   return false;
 });
 
-$(function() {
+$(function () {
   setTimeout(shuffleSayings, 500);
   setInterval(setTime, 500);
   setTime();

@@ -1,29 +1,28 @@
-const slist = require("./speechlist.js"),
-      stime = require("./speechtime.js");
+const slist = require("./speechlist.js");
 
 module.exports = (io) => {
   const admin = io.of("/admin");
 
   admin.on("connect", (socket) => {
     for (var i = 0; i < slist.length; i++) {
-      socket.emit("loadList", i, slist.get(i).object)
+      socket.emit("load_list", i, slist.get(i).object)
     }
     socket.emit("current.title_change", slist.current.title);
     socket.emit("current.switch", slist.id);
-    socket.emit("timer.load", stime.object);
+    socket.emit("timer.load", slist.timer.object);
 
     socket.on("append", (list, name) => {
       if (list == slist.id && slist.get(list).length == 0) {
-        stime.start();
+        slist.timer.start();
       }
       slist.get(list).append(name);
     });
 
     socket.on("next", (list) => {
       slist.get(list).next();
-      stime.reset();
+      slist.timer.reset();
       if (list == slist.id && slist.get(list).length > 0) {
-        stime.start();
+        slist.timer.start();
       }
     });
 
@@ -34,7 +33,7 @@ module.exports = (io) => {
     socket.on("delete", (list, index) => {
       slist.get(list).delete(index);
       if (list == slist.id && index == 0) {
-        stime.reset();
+        slist.timer.reset();
       }
     });
 
@@ -44,10 +43,11 @@ module.exports = (io) => {
 
     socket.on("title_change", (list, title) => {
       slist.get(list).title = title;
+      admin.emit("title_change", list, title);
     });
 
     socket.on("clear", (list) => {
-      stime.reset();
+      slist.timer.reset();
       slist.get(list).clear();
     });
 
@@ -59,24 +59,25 @@ module.exports = (io) => {
       slist.get(list).reopen();
     });
 
+    socket.on("options_change", (list, options) => {
+      slist.get(list).options = options;
+      admin.emit("options_change", list, options);
+    });
+
     socket.on("switch", (list) => {
       slist.switch(list);
-      stime.reset();
-      if (slist.get(list).length > 0) {
-        stime.start();
-      }
     });
 
     socket.on("timer_start", () => {
-      stime.start();
+      slist.timer.start();
     });
 
     socket.on("timer_pause", () => {
-      stime.pause();
+      slist.timer.pause();
     });
 
     socket.on("timer_reset", () => {
-      stime.reset();
+      slist.timer.reset();
     });
   });
 
@@ -84,12 +85,21 @@ module.exports = (io) => {
     admin.emit("current.title_change", title);
   });
 
+  slist.on("list.options_change", (title) => {
+    admin.emit("current.options_change", title);
+  });
+
   slist.on("manager.switch", (list) => {
     admin.emit("current.switch", list);
     admin.emit("current.title_change", slist.current.title);
+    admin.emit("timer.load", slist.timer.object);
   });
 
-  stime.onAny((event, data) => {
+  slist.timer.on("set_time", (data) => {
+    admin.emit("timer.load", slist.timer.object);
+  })
+
+  slist.timer.onAny((event, data) => {
     admin.emit("timer." + event, data);
   });
 
