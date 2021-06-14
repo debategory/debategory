@@ -11,7 +11,8 @@ const express  = require("express"),
       routes   = require("./modules/routes.js"),
       auth     = require("./modules/authentication.js"),
       slist    = require("./modules/speechlist.js"),
-      stime    = require("./modules/speechtime.js");
+      stime    = require("./modules/speechtime.js"),
+      i18n     = require("./modules/i18n.js");
 
 //////////////// DEBUG ////////////////
 for (var list in config.lists) {
@@ -32,6 +33,9 @@ app.set("twig options", {
 app.set('cache', false);
 twig.cache(false);
 
+app.locals.sites = pages;
+app.locals.locale = config.server.language;
+
 app.use(flash());
 app.use(express.urlencoded({
   extended: false
@@ -41,6 +45,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+app.use(i18n);
+
 app.use(passport.initialize());
 app.use(passport.session())
 

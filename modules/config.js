@@ -2,7 +2,8 @@ const config = require("../config.json");
 
 const defaults = {
   "server": {
-    "port": 3000
+    "port": 3000,
+    "language": "en"
   },
   "lists": [
     "Hauptantrag",

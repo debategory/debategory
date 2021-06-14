@@ -1,5 +1,6 @@
 # Debategory specific
 data/
+config.json
 
 # Logs
 logs

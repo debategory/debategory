@@ -6,7 +6,7 @@
   {"name": "Teilnehmende", "url": "/admin/attendees", "icon": "users"}
 ] %}
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
+<html lang="{{ locale }}" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,14 +38,14 @@
         </div>
         <div class="uk-navbar-right uk-visible@m">
           <ul class="uk-navbar-nav">
-            <li><a href="#" id="toggleFullscreen" uk-tooltip="title: Vollbild umschalten; pos: bottom"><span uk-icon="expand"></span></a></li>
-            <li><a href="#" id="toggleDarkmode" uk-tooltip="title: Farbschema umschalten; pos: bottom"><span uk-icon="paint-bucket"></span></a></li>
+            <li><a href="#" id="toggleFullscreen" uk-tooltip="title: {{ __("Toggle fullscreen") }}; pos: bottom"><span uk-icon="expand"></span></a></li>
+            <li><a href="#" id="toggleDarkmode" uk-tooltip="title: {{ __("Switch theme") }}; pos: bottom"><span uk-icon="paint-bucket"></span></a></li>
             <li>
               <a href="#" uk-tooltip="title: {{ user.name|e }}; pos: bottom-right" uk-icon="user"></a>
               <div class="uk-navbar-dropdown uk-background-secondary uk-dark">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                  <li><a href="#">Passwort ändern</a></li>
-                  <li><a href="/admin/logout">Abmelden</a></li>
+                  <li><a href="#">{{ __("Change password") }}</a></li>
+                  <li><a href="/admin/logout">{{ __("Log out") }}</a></li>
                 </ul>
               </div>
             </li>
@@ -59,8 +59,19 @@
     {% if not noloader %}
       <div class="uk-position-cover uk-overlay uk-overlay-default" id="loader">
         <div class="uk-cover uk-text-center">
-          <div uk-spinner="ratio: 3;"></div>
-          <div class="uk-margin-top" id="saying">Lädt...</div>
+          <div uk-spinner="ratio: 3;" id="sayingSpinner"></div>
+          <div class="uk-margin-top" id="saying">
+            <span>{{ __("Loading...") }}</span>
+            <span style="display: none;" id="sayingLostConnection">{{ __("Lost connection to the server") }}</span>
+            <span style="display: none;" id="sayingBadConnection">{{ __("This is taking a long time... Please reload the page.") }}</span>
+            <span style="display: none;" id="sayings">
+              <span>{{ __("<b>Debategory</b> is open source, by the way!") }}</span>
+              <span>{{ __("You can also <b>edit names</b> in the speech list by double-clicking on them.") }}</span>
+              <span>{{ __("Have you already tried the <b>Dark Mode</b>? Just click on the <i uk-icon='icon: paint-bucket' class='uk-text-top'></i> icon.") }}</span>
+              <span>{{ __("Thank you for using <b>Debategory</b>!") }}</span>
+              <span>{{ __("If you have feedback on <b>Debategory</b>, just drop us a line at <a href='mailto:support@debategory.org'>support@debategory.org</a>.") }}</span>
+            </span>
+          </div>
         </div>
       </div>
     {% endif %}

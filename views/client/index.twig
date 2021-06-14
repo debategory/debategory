@@ -2,9 +2,9 @@
 {% block content %}
   <h2 class="uk-h2 uk-heading-line uk-margin-remove-bottom uk-text-light uk-text-center"><span id="title"></span></h2>
   <div class="uk-flex uk-flex-around uk-width-1-1 uk-flex-middle">
-    <div class="uk-text-right uk-margin-remove uk-h1 uk-text-light uk-heading-large" id="timer" style="display: none;">02:00</div>
-    <div class="uk-text-left uk-margin-remove uk-h4 uk-text-light uk-text-muted uk-text-uppercase" style="display: none;" id="lock">
-      <span uk-icon="icon: lock"></span>&nbsp;<span class="uk-text-middle">Geschlossen</span>
+    <div class="uk-text-right uk-margin-remove uk-h1 uk-text-light uk-heading-large" id="timer" style="display: none;">00:00</div>
+    <div class="uk-text-left uk-margin-remove uk-h1 uk-text-light uk-text-muted uk-text-uppercase" style="display: none;" id="lock">
+      <span uk-icon="icon: lock; ratio: 1.5;"></span>&nbsp;<span class="uk-text-middle">{{ __("Closed") }}</span>
     </div>
   </div>
   <ul class="uk-margin-remove-vertical uk-list uk-h1 uk-list-striped uk-list-large uk-text-light uk-text-capitalize" id="speechlist"></ul>
