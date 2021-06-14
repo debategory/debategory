@@ -11,19 +11,19 @@ html, body {
 }
 
 .uk-button:disabled {
-  background-color: #272727 !important;
-  color: #555555 !important;
+  background-color: #272727;
+  color: #555555;
 }
 
-.uk-button.uk-button-secondary {
-  background-color: #757575 !important;
-  color: #ffffff !important;
+.uk-card-secondary>:not([class*=uk-card-media]) .uk-button-secondary, .uk-button-secondary {
+  background-color: #757575;
+  color: #ffffff;
 }
 
-.uk-button.uk-button-secondary:disabled {
-  background-color: #202020 !important;
-  color: #757575 !important;
+.uk-card-secondary>:not([class*=uk-card-media]) .uk-button-secondary:disabled, .uk-button-secondary:disabled {
+  background-color: #202020;
   border: 1px solid #444444;
+  color: #757575;
 }
 
 .dg-progress::-webkit-progress-value {

@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 button:disabled {
   cursor: not-allowed;
 }
@@ -7,15 +11,14 @@ button:disabled {
 }
 
 .dg-progress {
-  vertical-align: baseline;
-  -webkit-appearance: none;
   -moz-appearance: none;
-  display: block;
-  width: 100%;
-  border: 0;
+  -webkit-appearance: none;
   background-color: transparent;
+  border: 0;
+  display: block;
   height: 2px;
   overflow: hidden;
+  width: 100%;
 }
 
 .dg-progress:indeterminate {
@@ -42,36 +45,36 @@ button:disabled {
 
 .dg-progress::-ms-fill {
   background-color: #222222;
+  border: 0;
   transition: width .6s ease;
-  border: 0
 }
 
-.dg-progress.dg-warning::-moz-progress-bar.warning {
-  background-color: #faa05a !important;
+.dg-progress-warning::-moz-progress-bar {
+  background-color: #faa05a;
 }
 
-.dg-progress.dg-warning::-ms-fill.warning {
-  background-color: #faa05a !important;
+.dg-progress-warning::-ms-fill {
+  background-color: #faa05a;
 }
 
-.dg-progress.dg-warning::-webkit-progress-value {
-  background-color: #faa05a !important;
+.dg-progress-warning::-webkit-progress-value {
+  background-color: #faa05a;
 }
 
 .dg-bubble:after {
+  border: 34px solid transparent;
+  border-bottom: 0;
+  border-left: 0;
+  border-top-color: #ffffff;
+  bottom: 0;
 	content: '';
+  height: 0;
+  left: 25%;
+  margin-bottom: -34px;
+  margin-left: -17px;
 	position: absolute;
-	bottom: 0;
   top: 99%;
-	left: 25%;
 	width: 0;
-	height: 0;
-	border: 34px solid transparent;
-	border-top-color: #ffffff;
-	border-bottom: 0;
-	border-left: 0;
-	margin-left: -17px;
-	margin-bottom: -34px;
 }
 
 .dg-login-background {
@@ -80,6 +83,6 @@ button:disabled {
 }
 
 .dg-login-background-pride {
-  background: rgb(255,0,0);
-  background: linear-gradient(130deg, rgba(255,0,0,1) 10%, rgba(255,128,0,1) 26%, rgba(210,217,49,1) 42%, rgba(0,153,28,1) 58%, rgba(0,52,255,1) 74%, rgba(145,69,252,1) 90%);
+  background: rgb(22,82,164);
+  background: linear-gradient(130deg, #ff0000 16%, #ffa500 16% 33%, #ffff00 33% 50%, #008000 50% 67%, #0000ff 67% 84%, #800080 84%);
 }
