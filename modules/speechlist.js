@@ -228,51 +228,78 @@ class Speechtimer extends EventEmitter {
 class SpeechlistSwitch extends EventEmitter {
   constructor() {
     super();
-    this.id = false;
+    this.id = null;
     this.timer = new Speechtimer(false);
     this._lists = [];
     this._currentListeners = [];
     this._internalListeners = [];
+    this.on("list.clear", () => {
+      this.timer.reset();
+    });
+    this.on("list.delete", (index) => {
+      if (index == 0) {
+        this.timer.reset();
+      }
+    });
+    this.on("list.next", () => {
+      this.timer.reset();
+      if (this.current.length > 0) {
+        this.timer.start();
+      }
+    });
+    this.on("list.append", () => {
+      if (this.current.length == 1) {
+        this.timer.start();
+      }
+    });
+    this.on("options_change", () => {
+      this.timer.time = this.current.options.speechtime;
+      if (this.current.length > 0) {
+        this.timer.reset();
+        this.timer.start();
+      }
+    });
   }
 
-  _eventhandler(this, event, data, list) {
-    console.log(event, data, sls, this);
+  _mirrorSettings(list) {
+    var options = this.get(0).options;
+    options.mirrorSettings = true;
+    if (this.get(list).options != options) {
+      this.get(list).options = options;
+    }
   }
 
   new(title) {
     var id = this._lists.push(new Speechlist(title)) - 1;
-    (function (obj) {
-      obj._internalListeners.push(obj._lists[id].onAny((event, data) => {
-        obj._eventhandler(obj, event, data, this);
-      }), {objectify: true})
-    })(this);
+    var listeners = {
+      "append": null,
+      "next": null,
+      "clear": null
+    }
     this.emit("manager.new", id);
     return (id);
   }
 
   switch(id) {
-    if (id >= this._lists.length) {
+    if (isNaN(id) || id < 0 || id >= this.length || id == this.id) {
       return false;
     }
-    if (this.id !== false) {
+    if (this.id != null) {
       for (var i in this._currentListeners) {
         this._currentListeners[i].off();
       }
     }
     for (var i in events) {
       (function (obj, evt) {
-        obj._currentListeners.push(obj._lists[id].on(evt, (data) => {
+        obj._currentListeners.push(obj.get(id).on(evt, (data) => {
           obj.emit("list." + evt, data);
         }, {objectify: true}));
       })(this, events[i]);
     }
-    this._currentListeners.push(this._lists[id].on("options_change", (data) => {
-      this.timer.time = this._lists[id].options.speechtime;
-    }, {objectify: true}));
     this.id = id;
-    this.timer.time = this._lists[id].options.speechtime;
+    this.timer.time = this.current.options.speechtime;
     this.timer.reset();
-    if (this._lists[id].length > 0) {
+    if (this.current.length > 0) {
       this.timer.start();
     }
     this.emit("manager.switch", id);
@@ -280,14 +307,14 @@ class SpeechlistSwitch extends EventEmitter {
   }
 
   get(id) {
-    if (id >= this._lists.length) {
+    if (isNaN(id) || id < 0 || id >= this.length) {
       return false;
     }
     return this._lists[id];
   }
 
   remove(id) {
-    if (id >= this._lists.length) {
+    if (id >= this.length) {
       return false;
     }
     if (id == this.id) {
@@ -296,10 +323,11 @@ class SpeechlistSwitch extends EventEmitter {
     } else if (id < this.id) {
       this.id--;
     }
-    this._internalListeners[id].off();
+    this._internalListeners[id].offAny();
     delete this._lists[id];
     delete this._internalListeners[id];
     this._lists.splice(id, 1);
+    this._internalListeners.splice(id, 1);
     this.emit("manager.remove", id);
     return true;
   }

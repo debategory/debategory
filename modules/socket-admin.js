@@ -12,18 +12,11 @@ module.exports = (io) => {
     socket.emit("timer.load", slist.timer.object);
 
     socket.on("append", (list, name) => {
-      if (list == slist.id && slist.get(list).length == 0) {
-        slist.timer.start();
-      }
       slist.get(list).append(name);
     });
 
     socket.on("next", (list) => {
       slist.get(list).next();
-      slist.timer.reset();
-      if (list == slist.id && slist.get(list).length > 0) {
-        slist.timer.start();
-      }
     });
 
     socket.on("edit", (list, index, name) => {
@@ -32,9 +25,6 @@ module.exports = (io) => {
 
     socket.on("delete", (list, index) => {
       slist.get(list).delete(index);
-      if (list == slist.id && index == 0) {
-        slist.timer.reset();
-      }
     });
 
     socket.on("sort", (list, oldIndex, newIndex) => {
@@ -47,7 +37,6 @@ module.exports = (io) => {
     });
 
     socket.on("clear", (list) => {
-      slist.timer.reset();
       slist.get(list).clear();
     });
 

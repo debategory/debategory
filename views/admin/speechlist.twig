@@ -33,35 +33,43 @@
     <progress id="speechtimerBar" class="dg-progress uk-position-bottom" value="0" max="0"></progress>
   </div>
 
-  <div class="uk-margin-top">
-    <div class="uk-grid-medium uk-grid-match uk-child-width-expand" uk-grid id="speechlists">
+  <div class="uk-margin-top" uk-slider="finite: true;">
+    <div class="uk-slider-container">
+    <ul class="uk-slider-items uk-grid-medium uk-grid-match uk-child-width-auto" uk-grid id="speechlists">
 
-      {% for i in range(1) %}
-      <div class="speechlist-container">
-        <div class="uk-card uk-card-small uk-card-default">
-          <div class="uk-card-body">
-            <div class="uk-margin">
-              <input type="text" class="uk-input speechlist-input" data-placeholder-closed="{{ __("List closed.") }}" placeholder="{{ __("Add person...") }}">
+    {% for i in range(config.speechlist.defaultLists.length - 1) %}
+      <li>
+        <div class="speechlist-container">
+          <div class="uk-card uk-card-small uk-card-default">
+            <div class="uk-card-body">
+              <div class="uk-margin">
+                <input type="text" class="uk-input speechlist-input" data-placeholder-closed="{{ __("List closed.") }}" placeholder="{{ __("Add person...") }}">
+              </div>
+              <div class="uk-button-group">
+                <button class="uk-button uk-button-secondary speechlist-next" uk-tooltip="title: {{ __("Next person") }}; delay: 300; pos: bottom"><span uk-icon="chevron-double-right"></span><span class="uk-visible@l">&nbsp;{{ __("Next") }}</span></button>
+                <button class="uk-button speechlist-close" uk-tooltip="title: {{ __("Close list") }}; delay: 300; pos: bottom"><span uk-icon="lock"></span><span class="uk-visible@xl">&nbsp;{{ __("Close") }}</span></button>
+                <button class="uk-button uk-button-danger speechlist-reopen" uk-tooltip="title: {{ __("Reopen list") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="unlock"></span><span class="uk-visible@xl">&nbsp;{{ __("Open") }}</span></button>
+                <button class="uk-button speechlist-clear" uk-tooltip="title: {{ __("Empty list") }}; delay: 300; pos: bottom"><span uk-icon="trash"></span><span class="uk-visible@xl">&nbsp;{{ __("Empty") }}</span></button>
+                <button class="uk-button speechlist-settings" uk-tooltip="title: {{ __("List settings") }}; delay: 300; pos: bottom"><span uk-icon="settings"></span><span class="uk-visible@xl">&nbsp;{{ __("Settings") }}</span></button>
+                <button class="uk-button speechlist-show" uk-tooltip="title: {{ __("Display list") }}; delay: 300; pos: bottom"><span uk-icon="tv"></span><span class="uk-visible@xl">&nbsp;{{ __("Display") }}</span></button>
+                <button class="uk-button speechlist-shown" disabled uk-tooltip="title: {{ __("List is displayed") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="check"></span><span class="uk-visible@xl">&nbsp;{{ __("Displayed") }}</span></button>
+              </div>
             </div>
-            <div class="uk-button-group">
-              <button class="uk-button uk-button-secondary speechlist-next" uk-tooltip="title: {{ __("Next person") }}; delay: 300; pos: bottom"><span uk-icon="chevron-double-right"></span><span class="uk-visible@l">&nbsp;{{ __("Next") }}</span></button>
-              <button class="uk-button speechlist-close" uk-tooltip="title: {{ __("Close list") }}; delay: 300; pos: bottom"><span uk-icon="lock"></span><span class="uk-visible@xl">&nbsp;{{ __("Close") }}</span></button>
-              <button class="uk-button uk-button-danger speechlist-reopen" uk-tooltip="title: {{ __("Reopen list") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="unlock"></span><span class="uk-visible@xl">&nbsp;{{ __("Open") }}</span></button>
-              <button class="uk-button speechlist-clear" uk-tooltip="title: {{ __("Empty list") }}; delay: 300; pos: bottom"><span uk-icon="trash"></span><span class="uk-visible@xl">&nbsp;{{ __("Empty") }}</span></button>
-              <button class="uk-button speechlist-settings" uk-tooltip="title: {{ __("List settings") }}; delay: 300; pos: bottom"><span uk-icon="settings"></span><span class="uk-visible@xl">&nbsp;{{ __("Settings") }}</span></button>
-              <button class="uk-button speechlist-show" uk-tooltip="title: {{ __("Display list") }}; delay: 300; pos: bottom"><span uk-icon="tv"></span><span class="uk-visible@xl">&nbsp;{{ __("Display") }}</span></button>
-              <button class="uk-button speechlist-shown" disabled uk-tooltip="title: {{ __("List is displayed") }}; delay: 300; pos: bottom" style="display: none;"><span uk-icon="check"></span><span class="uk-visible@xl">&nbsp;{{ __("Displayed") }}</span></button>
+            <div class="uk-card-footer">
+              <p class="speechlist-empty uk-margin-remove-bottom uk-text-center uk-text-italic uk-text-light uk-text-muted">{{ __("List empty.") }}</p>
+              <ul class="uk-list uk-margin-remove-top uk-list-striped uk-text-capitalize uk-list-collapse speechlist" style="display: none;" uk-sortable="handle: .uk-drag"></ul>
             </div>
-          </div>
-          <div class="uk-card-footer">
-            <p class="speechlist-empty uk-margin-remove-bottom uk-text-center uk-text-italic uk-text-light uk-text-muted">{{ __("List empty.") }}</p>
-            <ul class="uk-list uk-margin-remove-top uk-list-striped uk-text-capitalize uk-list-collapse speechlist" style="display: none;" uk-sortable="handle: .uk-drag"></ul>
           </div>
         </div>
-      </div>
+      </li>
     {% endfor %}
 
+    </ul>
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
     </div>
+    <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
   </div>
 
   <div id="settings" uk-modal>

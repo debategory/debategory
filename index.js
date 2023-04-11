@@ -18,7 +18,7 @@ for (var list in config.speechlist.defaultLists) {
   slist.new(config.speechlist.defaultLists[list]);
 }
 slist.get(0).options = {"mirrorSettings": false, "speechtime": 180, "autoDisplay": false};
-slist.get(1).options = {"mirrorSettings": false, "speechtime": false, "autoDisplay": true};
+slist.get(1).options = {"mirrorSettings": true, "speechtime": false, "autoDisplay": true};
 slist.switch(0);
 
 var pages = [

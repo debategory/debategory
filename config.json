@@ -1,2 +1,12 @@
 {
+  "server": {
+    "language": "de",
+    "autoLanguage": false
+  },
+  "speechlist": {
+    "defaultLists": [
+      "Hauptantrag",
+      "Änderungsantrag"
+    ]
+  }
 }
